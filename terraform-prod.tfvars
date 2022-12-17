@@ -5,4 +5,6 @@ environment_subnets = [{"subnet_cidr_block":"172.21.102.0/24", "name": "subnet1"
 
 environment_vpcs = {"vpc_cidr_block":"172.21.0.0/16", "name": "prod_vpc"}
 
+ips = {"sshipcidr" :"205.251.233.53/32", "any": "0.0.0.0/0"}
+
 environment = "production"
