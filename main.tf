@@ -11,6 +11,10 @@ variable "environment" {
   description = "deployment environment"
 }
 
+variable "instance_type" {
+  description = "instance type"
+}
+
 variable "environment_subnets" {
   description = "cidr blocks and name tags for subnets"
   type = list(object({
@@ -33,6 +37,8 @@ variable "environment_vpcs" {
 variable "ips" {
   description = "public ip address"
 }
+
+variable "public_key_location" {}
 
 # VPC Resources
 
@@ -126,5 +132,37 @@ data "aws_vpc" "existing-vpc" {
   default = true
 }
 
+data "aws_ami" "latest_al" {
+  most_recent = true
+  owners = ["amazon"]
+  filter {
+    name = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+  }
+}
+
+resource "aws_key_pair" "ssh-key" {
+  key_name = "server-key"
+  public_key = "${file(var.public_key_location)}"
+}
 
 
+resource "aws_instance" "generic_server" {
+  ami = data.aws_ami.latest_al.id
+  instance_type = var.instance_type
+  count = length(var.environment_subnets)
+  associate_public_ip_address = true
+  subnet_id = aws_subnet.generic-subnet[count.index].id
+  key_name = aws_key_pair.ssh-key.key_name
+  security_groups = [aws_security_group.generic_security_group.id]
+
+  user_data = file("entry-script.sh")
+}
+
+
+
+
+#output "aws_public_ip" {
+#  count = length(aws_instance.generic_server)
+#  value = aws_instance.generic_server[count.index].public_ip
+#}

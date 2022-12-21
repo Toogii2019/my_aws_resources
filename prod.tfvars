@@ -7,4 +7,8 @@ environment_vpcs = {"vpc_cidr_block":"172.21.0.0/16", "name": "prod_vpc"}
 
 ips = {"sshipcidr" :"205.251.233.53/32", "any": "0.0.0.0/0"}
 
+instance_type = "t2.micro"
+
+public_key_location = "~/.ssh/aws_id_rsa.pub"
+
 environment = "production"
