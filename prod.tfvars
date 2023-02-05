@@ -10,5 +10,6 @@ ips = {"sshipcidr" :"205.251.233.53/32", "any": "0.0.0.0/0"}
 instance_type = "t2.micro"
 
 public_key_location = "~/.ssh/aws_id_rsa.pub"
+private_key_location = "~/.ssh/aws_id_rsa"
 
 environment = "production"
