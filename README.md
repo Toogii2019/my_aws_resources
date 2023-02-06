@@ -7,6 +7,10 @@
 
 git clone git@github.com:Toogii2019/my_aws_resources.git
 
+## Resource diagram
+
+<img src="Untitled Diagram.drawio" width="500" height="300">
+
 ## Load modules and initialize
 
 cd terraform && terraform init  
